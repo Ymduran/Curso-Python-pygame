@@ -10,8 +10,9 @@ Versión 0.2:
 
 #Se importan los módulos
 import pygame
-from Configurations import Configurations
-from Game_funcionalities import game_events, screen_refresh
+from snake_game.Version_03.Configurations import Configurations
+from snake_game.Version_03.Game_funcionalities import game_events, screen_refresh
+from snake_game.Version_03.Snake import SnakeBlock
 
 
 
@@ -32,6 +33,11 @@ def run_game()->None:
     #game_title = "Snake game en pygame"
     pygame.display.set_caption(Configurations.get_game_title())
 
+
+    # Se crea el bloque inicial de la serpiente
+    snake_head = SnakeBlock()
+
+
     #Ciclo principal del videojuego.
     game_over = False
 
@@ -39,8 +45,8 @@ def run_game()->None:
         # Se verifican los eventos del teclado (mouse y teclado) del juego.
         game_over = game_events()
 
-        # Se dibujan los elementos de la pantalla
-        screen_refresh(screen)
+        # Se dibujan los elementos de la pantalla.
+        screen_refresh(screen, snake_head)
 
 
     # Cerrar los recursos de pygame
