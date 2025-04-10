@@ -20,7 +20,7 @@ def game_events() -> bool:
     return game_over
 
 
-def screen_refresh(screen: pygame.surface.Surface, snake_head: SnakeBlock) -> None:
+def screen_refresh(screen: pygame.surface.Surface, snake_head: SnakeBlock, clock: pygame.time.Clock) -> None:
     """
     Función que administra los elementos visuales del juego.
     """
@@ -30,7 +30,8 @@ def screen_refresh(screen: pygame.surface.Surface, snake_head: SnakeBlock) -> No
     # Se dibuja la cabeza de la serpiente.
     snake_head.blit(screen)
 
-
-
     # Se actualiza la pantalla.
     pygame.display.flip()
+
+    # Se controla la velocidad de fps del juego.
+    clock.tick(Configurations.get_fps())
