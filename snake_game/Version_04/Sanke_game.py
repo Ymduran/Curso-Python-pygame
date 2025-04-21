@@ -1,20 +1,19 @@
 """
-Nombre: Durán Breceda Lourdes Jamileth
-Fecha: 210425
+Nombre:
+Fecha:
 Versión 0.4:
     - Se crea la pantalla de inicio.
     - Se configura el título de la pantalla.
     - Configuraciones del juego.
     - Se agregó el módulo Game_funcionalities.py
-    - Se controla la velocidad de FPS.
 """
 
 #Se importan los módulos
 import pygame
-from Configurations import Configurations
-from Game_funcionalities import game_events, screen_refresh
+from snake_game.Version_04.Configurations import Configurations
+from snake_game.Version_04.Game_funcionalities import game_events, screen_refresh
 from Snake import SnakeBlock
-from pygame.sprite import Group
+
 
 
 
@@ -43,10 +42,6 @@ def run_game()->None:
     snake_head = SnakeBlock(is_head = True)
     snake_head.snake_head_init()
 
-    # Se crea un Grupo para almacenar el cuerpo de la serpiente.
-    snake_body = Group()
-    snake_body.add(snake_head)
-
 
     #Ciclo principal del videojuego.
     game_over = False
@@ -56,7 +51,7 @@ def run_game()->None:
         game_over = game_events()
 
         # Se dibujan los elementos de la pantalla.
-        screen_refresh(screen,snake_body, clock)
+        screen_refresh(screen,snake_head, clock)
 
 
     # Cerrar los recursos de pygame
