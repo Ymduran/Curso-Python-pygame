@@ -1,20 +1,19 @@
-
-
 class Configurations:
     """
     Clase que contiene todas las configuraciones del juego.
     """
+    # Configuraciones de la pantalla.
+    _game_title = "Snake game en pygame"            # Título de la ventana.
+    _screen_size = (1280, 720)                      # Resolución de la pantalla (ancho, alto).
+    _background = (20, 30, 50)                      # Fondo de la pantalla en formato RGB.
+    _fps = 8                                        # Número máximo de FPS del videojuego.
 
-    _screen_size = (1280, 720)   #Resolución de la pantalla (ancho x alto)
-    _game_title = "Snake game en pygame" # Título del juego.
-    _background = (20, 30, 50) #Fondo de la pantalla en formato rgb
-    _fps = 8
+    # Configuraciones de la serpiente.
+    _snake_block_size = 30                          # Tamaño del bloque. Es muy recomendable que sea
+                                                    # divisor común del largo y ancho de _screen_size.
+    _snake_head_color = (255, 255, 255)             # Color de la cabeza de la serpiente.
+    _snake_body_color = (160, 32, 240)                 # Color del cuerpo de la serpiente.
 
-
-    #Configuraciones de la serpiente:
-    _snake_block_size = 80          # Tamaño del bloque de la serpiente.
-    _snake_head_color = (255, 255, 255) #Color de la cabeza de la serpiente.
-    _snake_body_color = (0, 255, 0)
 
     @classmethod
     def get_game_title(cls) -> str:

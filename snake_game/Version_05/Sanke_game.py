@@ -7,7 +7,8 @@ Versión 0.5:
     - Configuraciones del juego.
     - Se agregó el módulo Game_funcionalities.py
 """
-from email.headerregistry import Group
+
+#from email.headerregistry import Group
 
 #Se importan los módulos
 import pygame
@@ -20,10 +21,7 @@ from pygame.sprite import Group
 
 
 def run_game()->None:
-    """
-    Función principal del videojuego.
-    :return:
-    """
+    """ Función principal del videojuego. """
     # Se incia el módulo pygame.
     pygame.init()
 
@@ -43,12 +41,11 @@ def run_game()->None:
     snake_head = SnakeBlock(is_head = True)
     snake_head.snake_head_init()
 
+    # Se crea un grupo que va a almacenar el cuerpo de la serpiente, por lo que se agrega la cabeza de la serpiente.
     snake_body = Group()
     snake_body.add(snake_head)
 
-
-
-    #Ciclo principal del videojuego.
+    # Ciclo principal del videojuego.
     game_over = False
 
     while not game_over:
