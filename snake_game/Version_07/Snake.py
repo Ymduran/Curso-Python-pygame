@@ -54,9 +54,7 @@ class SnakeBlock(Sprite):
 
 
     def snake_head_init(self) -> None:
-        """
-        Se utiliza para inicializar una ubicación aleatoria de la cabeza de la serpiente.
-        """
+        """ Se utiliza para inicializar una ubicación aleatoria de la cabeza de la serpiente. """
         screen_width = Configurations.get_screen_size()[0]
         screen_height = Configurations.get_screen_size()[1]
         snake_block_size = Configurations.get_snake_block_size()
@@ -66,64 +64,48 @@ class SnakeBlock(Sprite):
 
     @classmethod
     def get_is_moving_right(cls) -> bool:
-        """
-        Getter para la bandera _is_moving_right.
-        """
+        """ Getter para la bandera _is_moving_right. """
         return cls._is_moving_right
 
 
     @classmethod
     def set_is_moving_right(cls, value: bool) -> None:
-        """
-        Setter para la bandera _is_moving_right.
-        """
+        """ Setter para la bandera _is_moving_right. """
         cls._is_moving_right = value
 
 
     @classmethod
     def get_is_moving_left(cls) -> bool:
-        """
-        Getter para la bandera _is_moving_left.
-        """
+        """ Getter para la bandera _is_moving_left. """
         return cls._is_moving_left
 
 
     @classmethod
     def set_is_moving_left(cls, value: bool) -> None:
-        """
-        Setter para la bandera _is_moving_left.
-        """
+        """ Setter para la bandera _is_moving_left. """
         cls._is_moving_left = value
 
 
     @classmethod
     def get_is_moving_up(cls) -> bool:
-        """
-        Getter para la bandera _is_moving_up.
-        """
+        """ Getter para la bandera _is_moving_up. """
         return cls._is_moving_up
 
 
     @classmethod
     def set_is_moving_up(cls, value: bool) -> None:
-        """
-        Setter para la bandera _is_moving_up.
-        """
+        """ Setter para la bandera _is_moving_up. """
         cls._is_moving_up = value
 
 
     @classmethod
     def get_is_moving_down(cls) -> bool:
-        """
-        Getter para la bandera _is_moving_down.
-        """
+        """ Getter para la bandera _is_moving_down. """
         return cls._is_moving_down
 
 
     @classmethod
     def set_is_moving_down(cls, value: bool) -> None:
-        """
-        Setter para la bandera _is_moving_down.
-        """
+        """ Setter para la bandera _is_moving_down. """
         cls._is_moving_down = value
 
