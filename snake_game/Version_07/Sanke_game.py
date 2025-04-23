@@ -41,20 +41,24 @@ def run_game() -> None:
 
     # Se crea el bloque inicial de la manzana.
     apple = Apple()
+    apple.random_position()
+
+    # Se crea un grupo con las manzanas.
+    apples = Group()
+    apples.add(apple)
 
 
     # Ciclo principal del videojuego.
     game_over = False
     while not game_over:
-        """CAMBIO. Ahora recibe el cuerpo de la serpiente para añadir el nuevo bloque al presionar 'espacio'."""
         # Función que administra los eventos del juego.
-        game_over = game_events(snake_body)
+        game_over = game_events(snake_body, apples)
 
         # Función que administra el movimiento de la serpiente.
         snake_movement(snake_body)
 
         # Función que administra los elementos de la pantalla.
-        screen_refresh(screen, clock, snake_body, apple)
+        screen_refresh(screen, clock, snake_body, apples)
 
     # Cierra todos los recursos del módulo pygame.
     pygame.quit()

@@ -1,14 +1,13 @@
-from email.headerregistry import Group
-
 import pygame
 from Configurations import Configurations
 from Snake import SnakeBlock
 from Apple import Apple
 
-def game_events(snake_body: pygame.sprite.Group) -> bool:
+def game_events(snake_body: pygame.sprite.Group, apples: pygame.sprite.Group) -> bool:
     """
     Función que administra los eventos del juego.
     :param snake_body: Grupo con el cuerpo de la serpiente.
+    :param apples: Grupo con las manzanas.
     :return: La bandera de fin del juego.
     """
     # Se declara la bandera de fin del juego que se retorna.
@@ -50,11 +49,19 @@ def game_events(snake_body: pygame.sprite.Group) -> bool:
                 SnakeBlock.set_is_moving_up(False)
                 SnakeBlock.set_is_moving_down(True)
 
-            """NUEVO."""
+
             # Se agrega un nuevo bloque al cuerpo de la serpiente.
             if event.key == pygame.K_SPACE:
                 new_snake_block = SnakeBlock()
                 snake_body.add(new_snake_block)
+
+            if event.key == pygame.K_SPACE:
+                new_apple = Apple()
+                new_apple.random_position()
+                apples.add(new_apple)
+
+
+
 
     # Se regresa la bandera.
     return game_over
@@ -88,22 +95,24 @@ def snake_movement(snake_body: pygame.sprite.Group) -> None:
 
 
 def screen_refresh(screen: pygame.surface.Surface, clock: pygame.time.Clock,
-                   snake_body: pygame.sprite.Group, apple: Apple) -> None:
+                   snake_body: pygame.sprite.Group, apples: pygame.sprite.Group) -> None:
     """
     Función que administra los elementos de la pantalla.
     :param screen: Objeto con la pantalla.
     :param clock: Objeto con el reloj del videojuego.
     :param snake_body: Grupo con el cuerpo de la serpiente.
+    :param apples:
     """
     # Se dibujan los elementos en la pantalla.
     screen.fill(Configurations.get_background())    # Fondo de la pantalla en formato RGB.
+
+    # Para dibujar la manzana.
+    apples.draw(screen)
 
     # Se dibuja la serpiente, dibujando primero el último bloque y al último la cabeza de la serpiente.
     for snake_block in reversed(snake_body.sprites()): # Para dibujar primero el último elemento del cuerpo de la serpiente.
         snake_block.blit(screen)
 
-    # Para dibujar la manzana.
-    apple.blit(screen)
 
     # Es más eficiente, pero siempre dibuja en el orden en que fueron agregados al grupo.
     #snake_body.draw(screen)

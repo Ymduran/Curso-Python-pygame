@@ -15,68 +15,53 @@ class Configurations:
     _snake_body_color = (160, 32, 240)                 # Color del cuerpo de la serpiente.
 
     # Configuraciones de la manzana.
-    _apple_color = (255, 0, 0)
-    _apple_size = (30, 30)
+    _apple_color = (255, 0, 0)                      #Color de la manzana en formato RGB.
+    _apple_size = _snake_block_size                 # Tamaño de la manzana.
 
 
     @classmethod
     def get_game_title(cls) -> str:
-        """
-        Getter para _game_title.
-        """
+        """ Getter para _game_title. """
         return cls._game_title
 
     @classmethod
     def get_screen_size(cls) -> tuple[int, int]:
-        """
-        Getter para _screen_size.
-        """
+        """ Getter para _screen_size. """
         return cls._screen_size
 
     @classmethod
     def get_background(cls) -> tuple[int, int, int]:
-        """
-        Getter para _background.
-        """
+        """ Getter para _background. """
         return cls._background
 
     @classmethod
     def get_fps(cls) -> int:
-        """
-        Getter para _fps.
-        """
+        """ Getter para _fps. """
         return cls._fps
 
     @classmethod
     def get_snake_block_size(cls) -> int:
-        """
-        Getter para _snake_block_size.
-        """
+        """ Getter para _snake_block_size. """
         return cls._snake_block_size
 
     @classmethod
     def get_snake_head_color(cls) -> tuple[int, int, int]:
-        """
-        Getter para _snake_head_color.
-        """
+        """ Getter para _snake_head_color. """
         return cls._snake_head_color
 
     @classmethod
     def get_snake_body_color(cls) -> tuple[int, int, int]:
-        """
-        Getter para _snake_body_color.
-        """
+        """ Getter para _snake_body_color. """
         return cls._snake_body_color
 
     @classmethod
+    def get_apple_color(cls) -> tuple[int, int, int]:
+        """ Getter para _apple_color. """
+        return cls._apple_color
+
+
+    @classmethod
     def get_apple_size(cls) -> int:
-        """
-        Getter para _apple_size.
-        """
+        """ Getter para _apple_size. """
         return cls._apple_size
 
-    def get_apple_color(cls) -> tuple[int, int, int]:
-        """
-        Getter para _apple_color.
-        """
-        return cls._apple_color
