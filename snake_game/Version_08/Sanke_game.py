@@ -1,16 +1,14 @@
 """
 Nombre: Durán Breceda Lourdes Jamileth
 Fecha: 240425
-Versión 0.7:
-    - Se agregó el módulo Game_funcionalities.py
-    - Se agrega bloques al cuerpo de la serpiente.
-    - Se agrega la manzana.
+Versión 0.8:
+- Se agregaron las colisiones del juego.
 
 """
 # Se importan los módulos.
 import pygame
 from Configurations import Configurations
-from Game_funcionalities import game_events, screen_refresh, snake_movement
+from Game_funcionalities import game_events, screen_refresh, snake_movement, check_collision
 from Snake import SnakeBlock
 from pygame.sprite import Group
 from Apple import Apple
@@ -53,6 +51,9 @@ def run_game() -> None:
         # Función que administra el movimiento de la serpiente.
         snake_movement(snake_body)
 
+
+        # Se revisan las colisiones en el juego.
+        game_over = check_collision(screen, snake_body, apples)
         # Función que administra los elementos de la pantalla.
         screen_refresh(screen, clock, snake_body, apples)
 
