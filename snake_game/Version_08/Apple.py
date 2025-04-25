@@ -44,8 +44,7 @@ class Apple(Sprite):
                 if self.rect == snake_block.rect:
                     repeat = True
                     break
-                else:
-                    repeat = False
+                else: repeat = False
 
     @classmethod
     def get_no_apples(cls) -> int:

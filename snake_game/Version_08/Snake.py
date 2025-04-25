@@ -31,10 +31,8 @@ class SnakeBlock(Sprite):
         super().__init__()
 
         # Se selecciona el color dependiendo de si es o no la cabeza de la serpiente.
-        if is_head:
-            color = Configurations.get_snake_head_color()
-        else:
-            color = Configurations.get_snake_body_color()
+        if is_head: color = Configurations.get_snake_head_color()
+        else: color = Configurations.get_snake_body_color()
 
         # Se crea una imagen para el sprite (superficie cuadrada del tamaño del bloque de la serpiente),
         # rellenándola con el color correspondiente a si es la parte de la cabeza o del cuerpo.
