@@ -14,8 +14,10 @@ class Apple(Sprite):
 
         Apple._no_apples += 1
 
-        self.image = pygame.Surface((Configurations.get_apple_size(), Configurations.get_apple_size()))
-        self.image.fill(color = Configurations.get_apple_color())
+        self.image = pygame.image.load(Configurations.get_apple_image_path())
+
+        apple_size = Configurations.get_apple_size()
+        self.image = pygame.transform.scale(self.image, (apple_size, apple_size))
 
         self.rect = self.image.get_rect()
 
@@ -32,7 +34,7 @@ class Apple(Sprite):
         """ Se utiliza para inicializar una ubicación aleatoria de la manzana y verificar que no se sobreponga sobre el cuerpo de la serpiente."""
         repeat = True
         while repeat:
-            # Se genera la posicón aleatoria.
+            # Se genera la posición aleatoria.
             screen_width = Configurations.get_screen_size()[0]
             screen_height = Configurations.get_screen_size()[1]
             apple_size = Configurations.get_apple_size()

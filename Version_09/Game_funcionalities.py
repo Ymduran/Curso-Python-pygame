@@ -5,7 +5,7 @@ from Configurations import Configurations
 from Snake import SnakeBlock
 from Apple import Apple
 from Version_09.Media import Background
-from Media import Background, Apple
+from Media import Background
 
 
 def game_events() -> bool:
@@ -125,7 +125,7 @@ def check_collision(screen: pygame.surface.Surface, snake_body: pygame.sprite.Gr
 
 def screen_refresh(screen: pygame.surface.Surface, clock: pygame.time.Clock,
                    snake_body: pygame.sprite.Group, apples: pygame.sprite.Group,
-                   background: Background, apple: Apple) -> None:
+                   background: Background) -> None:
     """
     Función que administra los elementos de la pantalla.
     :param screen: Objeto con la pantalla.

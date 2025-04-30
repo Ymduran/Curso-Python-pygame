@@ -53,22 +53,26 @@ def run_game() -> None:
         # Función que administra los eventos del juego.
         game_over = game_events()
 
-        # Condición para cerrar la ventana
-        if game_over: break
+
+        # Si el usuario ha cerrado la ventana, entonces se termina el ciclo inmediatamente para cerrar la ventana.
+        if game_over:
+            break
 
         # Función que administra el movimiento de la serpiente.
         snake_movement(snake_body)
 
 
-        # Se revisan las colisiones en el juego.
+        # Función que revisa las colisiones en el juego.
         game_over = check_collision(screen, snake_body, apples)
 
         # Función que administra los elementos de la pantalla.
-        screen_refresh(screen, clock, snake_body, apples, background, apple_img)
-        
-        # Cuando el jugador pierde se llama a la pantalla de fin de juego.
-        if game_over: game_over_screen()
+        screen_refresh(screen, clock, snake_body, apples, background)
 
+
+        # Si el usuario ha perdido la partida, entonces se llama a la función que muestra la pantalla
+        # del fin del juego.
+        if game_over:
+            game_over_screen()
 
     # Cierra todos los recursos del módulo pygame.
     pygame.quit()

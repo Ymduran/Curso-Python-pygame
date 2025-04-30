@@ -1,3 +1,4 @@
+from random import choice
 class Configurations:
     """
     Clase que contiene todas las configuraciones del juego.
@@ -22,6 +23,8 @@ class Configurations:
     # Rutas de Archivos multimedia.
     _backgrounds_image_path = "../snake_game/media/background_image.png"
     _apple_image_path = "../snake_game/media/apple1.png"
+    _snake_body_path = ["../snake_game/media/body3.png" , "../snake_game/media/img_2.png"]
+    _snake_head_path = "../snake_game/media/head.png"
     @classmethod
     def get_game_title(cls) -> str:
         """ Getter para _game_title. """
@@ -78,3 +81,13 @@ class Configurations:
     def get_apple_image_path(cls) -> str:
         """ Getter para _"""
         return cls._apple_image_path
+
+    @classmethod
+    def get_snake_body_image_path(cls) -> list:
+        """ Getter para get_snake_body_image_path"""
+        return cls._snake_body_path
+
+    @classmethod
+    def get_snake_head_path(cls) -> str:
+        """ Getter para get_snake_head_path"""
+        return cls._snake_head_path
