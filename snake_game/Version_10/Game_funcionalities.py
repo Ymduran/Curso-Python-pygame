@@ -4,7 +4,6 @@ import pygame
 from Configurations import Configurations
 from Snake import SnakeBlock
 from Apple import Apple
-from Version_09.Media import Background
 from Media import Background
 
 
@@ -132,14 +131,14 @@ def screen_refresh(screen: pygame.surface.Surface, clock: pygame.time.Clock,
     :param clock: Objeto con el reloj del videojuego.
     :param snake_body: Grupo con el cuerpo de la serpiente.
     :param apples:
+    :param background:
     """
 
     # Se dibuja el fondo de la pantalla
     background.blit(screen)
 
-    # Se dibujan los elementos en la pantalla.
-   # screen.fill(Configurations.get_background())    # Fondo de la pantalla en formato RGB.
-
+    # Se anima el movimiento de la manzana.
+    apples.sprites()[0].animate_apple()
     # Para dibujar la manzana.
     apples.draw(screen)
 

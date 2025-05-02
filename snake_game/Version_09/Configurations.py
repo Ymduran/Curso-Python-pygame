@@ -21,10 +21,10 @@ class Configurations:
     _apple_size = _snake_block_size                 # Tamaño de la manzana.
 
     # Rutas de Archivos multimedia.
-    _backgrounds_image_path = "../snake_game/media/background_image.png"
-    _apple_image_path = "../snake_game/media/apple1.png"
+    _backgrounds_image_path = "../media/background_image.png"
+    _apple_image_path = "../media/apple1.png"
     _snake_body_path = ["../snake_game/media/body3.png" , "../snake_game/media/img_2.png"]
-    _snake_head_path = "../snake_game/media/head.png"
+    _snake_head_path = "../media/head.png"
     @classmethod
     def get_game_title(cls) -> str:
         """ Getter para _game_title. """

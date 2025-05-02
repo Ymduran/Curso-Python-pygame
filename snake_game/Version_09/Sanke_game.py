@@ -45,7 +45,7 @@ def run_game() -> None:
     apples.add(apple)
 
     background = Background()
-    apple_img = Apple()
+    #apple_img = Apple()
 
     # Ciclo principal del videojuego.
     game_over = False
