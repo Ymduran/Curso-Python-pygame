@@ -9,7 +9,7 @@ from random import randint
 class SnakeBlock(Sprite):
 
     # Atributos de clase (banderas de movimiento).
-    _is_moving_rigth = False
+    _is_moving_right = False
     _is_moving_left = False
     _is_moving_up = False
     _is_moving_down = False
@@ -24,13 +24,13 @@ class SnakeBlock(Sprite):
         else:
             color = Configurations.get_snake_body_color()
 
-            # Se crea una imagen para el sprite (superficie cuadrada del tamaño del bloque de la serpiente),
-            # rellenándola con el color correspondiente a si es la parte de la cabeza o del cuerpo.
-            self.image = pygame.Surface((Configurations.get_snake_block_size(), Configurations.get_snake_block_size()))
-            self.image.fill(color)
+        # Se crea una imagen para el sprite (superficie cuadrada del tamaño del bloque de la serpiente),
+        # rellenándola con el color correspondiente a si es la parte de la cabeza o del cuerpo.
+        self.image = pygame.Surface((Configurations.get_snake_block_size(), Configurations.get_snake_block_size()))
+        self.image.fill(color)
 
-            # Se obtiene el rectángulo que representa la posición del sprite.
-            self.rect = self.image.get_rect()
+        # Se obtiene el rectángulo que representa la posición del sprite.
+        self.rect = self.image.get_rect()
 
 
     def blit(self, screen: pygame.surface.Surface) ->None:

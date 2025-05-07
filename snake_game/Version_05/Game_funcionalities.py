@@ -72,10 +72,10 @@ def snake_movment(snake_body : pygame.sprite.Group) -> None:
         head.rect.x -= Configurations.get_snake_block_size()
 
     elif SnakeBlock.get_is_moving_up():
-        head.rect.y += Configurations.get_snake_block_size()
+        head.rect.y -= Configurations.get_snake_block_size()
 
     elif SnakeBlock.get_is_moving_down():
-        head.rect.y -= Configurations.get_snake_block_size()
+        head.rect.y += Configurations.get_snake_block_size()
 
 
 def screen_refresh(screen: pygame.surface.Surface,

@@ -11,7 +11,7 @@ class Configurations:
 
 
     # Configuraciones de la serpiente.
-    _snake_block_size = 30                          # Tamaño del bloque. Es muy recomendable que sea
+    _snake_block_size = 50                         # Tamaño del bloque. Es muy recomendable que sea
                                                     # divisor común del largo y ancho de _screen_size.
     _snake_head_color = (255, 255, 255)             # Color de la cabeza de la serpiente.
     _snake_body_color = (160, 32, 240)                 # Color del cuerpo de la serpiente.
@@ -23,21 +23,20 @@ class Configurations:
 
     # Rutas de Archivos multimedia.
     _backgrounds_image_path = "../media/background_image.png"
-    _apple_images_path = ["../media/media snake_game/apple1.png",
-                            "../media/media snake_game/apple2.png",
-                            "../media/media snake_game/apple3.png",
-                            "../media/media snake_game/apple4.png"]
+    _apple_images_path = ["../media/media_snake_game/apple1.png",
+                            "../media/media_snake_game/apple2.png",
+                            "../media/media_snake_game/apple3.png",
+                            "../media/media_snake_game/apple4.png"]
 
     _snake_body_path = ["../media/body3.png" , "../media/img_2.png"]
 
-    _snake_heads_path = ["../media/media snake_game/head1.png",
-                         "../media/media snake_game/head2.png",
-                         "../media/media snake_game/head3.png"
-                         "../media/media snake_game/head4.png"
-                         "../media/media snake_game/head5.png",
-                         "../media/media snake_game/head6.png",
-                         "../media/media snake_game/head7.png"
-                         "../media/media snake_game/head8.png"]
+    _snake_heads_path = ["../media/media_snake_game/head1.png",
+                         "../media/media_snake_game/head2.png",
+                         "../media/media_snake_game/head3.png"]
+
+
+
+
     @classmethod
     def get_game_title(cls) -> str:
         """ Getter para _game_title. """

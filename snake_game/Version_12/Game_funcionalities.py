@@ -4,14 +4,13 @@ import pygame
 from Configurations import Configurations
 from Snake import SnakeBlock
 from Apple import Apple
-from Media import Background
+from Media import Background, Audio, Scoreboard, GameOverImage
+
 
 
 def game_events() -> bool:
     """
     Función que administra los eventos del juego.
-    :param snake_body: Grupo con el cuerpo de la serpiente.
-    :param apples: Grupo con las manzanas.
     :return: La bandera de fin del juego.
     """
     # Se declara la bandera de fin del juego que se retorna.
@@ -82,7 +81,8 @@ def snake_movement(snake_body: pygame.sprite.Group) -> None:
     elif SnakeBlock.get_is_moving_down(): head.rect.y += Configurations.get_snake_block_size()
 
 
-def check_collision(screen: pygame.surface.Surface, snake_body: pygame.sprite.Group, apples: pygame.sprite.Group) -> bool:
+def check_collision(screen: pygame.surface.Surface, snake_body: pygame.sprite.Group,
+                    apples: pygame.sprite.Group, audio:Audio, scoreboard: Scoreboard) -> bool:
     """
     Función que revisa las colisiones del juego.
     - Cabeza dela serpiente con el cuerpo.
@@ -91,6 +91,7 @@ def check_collision(screen: pygame.surface.Surface, snake_body: pygame.sprite.Gr
     :param screen: Pantalla.
     :param snake_body: Cuerpo de la serpiente.
     :param apples:
+    :param audio:
     :return:
     """
     # Se declara la bandera de fin de juego.
@@ -117,6 +118,12 @@ def check_collision(screen: pygame.surface.Surface, snake_body: pygame.sprite.Gr
         new_apple.random_position(snake_body)
         apples.add(new_apple)
 
+        # Se reproduce el sonido de que la serpiente ha comido la manzana.
+        audio.play_eats_apple_sound()
+        scoreboard.update(Apple.get_no_apples()-1)
+
+
+
     return game_over
 
 
@@ -124,7 +131,7 @@ def check_collision(screen: pygame.surface.Surface, snake_body: pygame.sprite.Gr
 
 def screen_refresh(screen: pygame.surface.Surface, clock: pygame.time.Clock,
                    snake_body: pygame.sprite.Group, apples: pygame.sprite.Group,
-                   background: Background) -> None:
+                   background: Background, scoreboard: Scoreboard) -> None:
     """
     Función que administra los elementos de la pantalla.
     :param screen: Objeto con la pantalla.
@@ -132,11 +139,13 @@ def screen_refresh(screen: pygame.surface.Surface, clock: pygame.time.Clock,
     :param snake_body: Grupo con el cuerpo de la serpiente.
     :param apples:
     :param background:
+    :param scoreboard:
     """
 
     # Se dibuja el fondo de la pantalla
     background.blit(screen)
-
+    # Se muestra el scoreboard
+    scoreboard.blit(screen)
     # Se anima el movimiento de la manzana.
     apples.sprites()[0].animate_apple()
     # Para dibujar la manzana.
@@ -159,6 +168,20 @@ def screen_refresh(screen: pygame.surface.Surface, clock: pygame.time.Clock,
     clock.tick(Configurations.get_fps())
 
 
-def game_over_screen() -> None:
+def game_over_screen(audio: Audio, screen: pygame.surface.Surface) -> None:
     """ Función con la parte del fin del juego. """
+
+    game_over_image = GameOverImage()
+    game_over_image.blit(screen)
+    pygame.display.flip()
+
+
+    # Se realiza un desvanecimiento de la música y se reproduce el sonido de fin del juego.
+    audio.music_fadeout(time=Configurations.get_music_fadeout_time())
+    audio.play_game_over_sound()
+
+
     time.sleep(Configurations.get_game_over_screen_time())
+
+
+

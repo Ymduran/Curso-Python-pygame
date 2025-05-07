@@ -4,7 +4,7 @@ import pygame
 from Configurations import Configurations
 from Snake import SnakeBlock
 from Apple import Apple
-from Media import Background
+from Media import Background, Audio
 
 
 def game_events() -> bool:
@@ -82,7 +82,8 @@ def snake_movement(snake_body: pygame.sprite.Group) -> None:
     elif SnakeBlock.get_is_moving_down(): head.rect.y += Configurations.get_snake_block_size()
 
 
-def check_collision(screen: pygame.surface.Surface, snake_body: pygame.sprite.Group, apples: pygame.sprite.Group) -> bool:
+def check_collision(screen: pygame.surface.Surface, snake_body: pygame.sprite.Group,
+                    apples: pygame.sprite.Group, audio:Audio) -> bool:
     """
     Función que revisa las colisiones del juego.
     - Cabeza dela serpiente con el cuerpo.
@@ -91,6 +92,7 @@ def check_collision(screen: pygame.surface.Surface, snake_body: pygame.sprite.Gr
     :param screen: Pantalla.
     :param snake_body: Cuerpo de la serpiente.
     :param apples:
+    :param audio:
     :return:
     """
     # Se declara la bandera de fin de juego.
@@ -116,6 +118,9 @@ def check_collision(screen: pygame.surface.Surface, snake_body: pygame.sprite.Gr
         new_apple = Apple()
         new_apple.random_position(snake_body)
         apples.add(new_apple)
+
+        # Se reproduce el sonido de que la serpiente ha comido la manzana.
+        audio.play_eats_apple_sound()
 
     return game_over
 
@@ -159,6 +164,10 @@ def screen_refresh(screen: pygame.surface.Surface, clock: pygame.time.Clock,
     clock.tick(Configurations.get_fps())
 
 
-def game_over_screen() -> None:
+def game_over_screen(audio: Audio) -> None:
     """ Función con la parte del fin del juego. """
+    # Se realiza un desvanecimiento de la música y se reproduce el sonido de fin del juego.
+    audio.music_fadeout(time=Configurations.get_music_fadeout_time())
+    audio.play_game_over_sound()
+
     time.sleep(Configurations.get_game_over_screen_time())
