@@ -42,6 +42,13 @@ class Configurations:
     _start_sound_path = "../media/media_snake_game/start_sound.wav"
     _eats_apple_sound_path = "../media/media_snake_game/eats_apple_sound.wav"
     _game_over_sound_path = "../media/media_snake_game/game_over_sound.wav"
+    _game_over_image_path = "../media/media_snake_game/game_over_image.png"
+
+    _typeface = "kimono"
+    _font_size = 40
+    _font_color = (171, 250, 10)
+
+    _points_text = "Puntos: 0"
 
 
     @classmethod
@@ -145,3 +152,31 @@ class Configurations:
     def get_game_over_sound_path(cls) -> str:
         """ Getter para _game_over_sound_path. """
         return cls._game_over_sound_path
+
+    @classmethod
+    def get_game_over_image_path(cls) -> str:
+        """ Getter para _game_over_image_path. """
+        return cls._game_over_image_path
+
+    @classmethod
+    def get_typeface(cls) -> str:
+        """ Getter para _typeface. """
+        return cls._typeface
+
+    @classmethod
+    def get_font_color(cls) -> tuple[int, int, int]:
+        """ Getter para _font_color.. """
+        return cls._font_color
+
+    @classmethod
+    def get_font_size(cls) -> int:
+        """ Getter para _font_size. """
+        return cls._font_size
+
+    @classmethod
+    def get_points_text(cls) -> str:
+        """ Getter para _points_text. """
+        return cls._points_text
+
+
+

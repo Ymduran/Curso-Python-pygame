@@ -81,13 +81,15 @@ class Audio:
 
 class Scoreboard:
     def __init__(self):
-        self._typeface = "kimono"
-        self._font_size = 40
-        self._font_color = (171, 250, 10)
+
+
+        self._typeface = Configurations.get_typeface()
+        self._font_size = Configurations.get_font_size()
+        self._font_color = Configurations.get_font_color()
 
         # Se agrega la imagen con el score.
         self._font = pygame.sysfont.SysFont(self._typeface, self._font_size)
-        self.image = self._font.render("Puntos: 0", True, self._font_color)
+        self.image = self._font.render(Configurations.get_points_text(), True, self._font_color)
         self.rect = self.image.get_rect()
 
         # Se ajusta la posición del marcador
@@ -107,7 +109,7 @@ class Scoreboard:
 
 class GameOverImage:
     def __init__(self):
-        self.image = pygame.image.load("../media/media_snake_game/game_over_image.png")
+        self.image = pygame.image.load(Configurations.get_game_over_image_path())
         self.rect = self.image.get_rect()
 
     def blit(self, screen: pygame.surface.Surface) -> None:

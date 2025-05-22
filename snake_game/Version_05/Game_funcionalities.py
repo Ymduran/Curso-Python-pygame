@@ -55,7 +55,6 @@ def game_events() -> bool:
 def snake_movment(snake_body : pygame.sprite.Group) -> None:
     """
     Función que gestiona el movimiento del cuerpo de la serpiente.
-    :param: snake_body: Grupo con el cuerpi de la serpiente
     """
     """
        Función que gestiona los movimientos de los bloques que componen el cuerpo de la serpiente.
