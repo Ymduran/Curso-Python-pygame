@@ -1,62 +1,52 @@
 """
-Nombre:
-Fehca:
-Versión 0.3:
-    - Se crea la pantalla de inicio.
-    - Se configura el título de la pantalla.
-    - Configuraciones del juego.
-    - Se agregó el módulo Game_funcionalities.py
+Nombre: Durán Breceda Lourdes Jamileth
+Fecha: 26 mayo 2025
+Versión 0.4:
+
+
 """
 
-#Se importan los módulos
+# Se importan los módulos necesarios.
 import pygame
-
-
 from Configurations import Configurations
 from Game_funcionalities import game_events, screen_refresh
 from Media import Background
 from Soldier import Soldier
 
 
-
-
-
-def run_game()->None:
+def run_game() -> None:
     """
     Función principal del videojuego.
-    :return:
     """
-    # Se incia el módulo pygame.
+    # Se inicializa el módulo de pygame y se realizan las configuraciones iniciales.
     pygame.init()
+    screen_size = Configurations.get_screen_size()
+    screen = pygame.display.set_mode(screen_size)
+    clock = pygame.time.Clock()  # Se usa para controlar la velocidad de fotogramas (FPS).
 
-    clock = pygame.time.Clock()
+    # Se configura el título de la ventana.
+    game_title = Configurations.get_game_title()
+    pygame.display.set_caption(game_title)
 
-    # Se inicaliza la pantalla.
-    #screen_size = (1280, 720)   #Resolución de la pantalla (ancho x alto)
-    screen = pygame.display.set_mode(Configurations.get_screen_size())
-    background=Background()
+    # Se crea el objeto del fondo de pantalla.
+    background = Background()
 
-    # Se configura el título del juego.
-    #game_title = "Snake game en pygame"
-    pygame.display.set_caption(Configurations.get_game_title())
-    soldier = Soldier()
-    soldier.soldier_init(screen)
+    # Se crea el objeto del soldado (personaje principal).
+    soldier = Soldier(screen)
 
-
-    #Ciclo principal del videojuego.
+    # Ciclo principal del videojuego.
     game_over = False
-
     while not game_over:
-        # Se verifican los eventos del teclado (mouse y teclado) del juego.
-        game_over = game_events()
 
-        # Se dibujan los elementos de la pantalla
-        screen_refresh(screen, background, soldier, clock)
+        # Función que administra los eventos del juego.
+        game_over = game_events(soldier)
 
+        # Función que administra los elementos de la pantalla.
+        screen_refresh(screen, clock, background, soldier)
 
-    # Cerrar los recursos de pygame
+    # Cierra todos los recursos del módulo pygame.
     pygame.quit()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     run_game()

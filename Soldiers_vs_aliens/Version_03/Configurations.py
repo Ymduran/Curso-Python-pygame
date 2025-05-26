@@ -11,7 +11,7 @@ class Configurations:
 
     _background_image_path = "../media/background.png"
 
-    _soldier_image_path = "../media/soldier.png"
+    _soldier_image_path = "../media/soldier-idle-sheet.png"
     _soldier_block_size = 80
     _fps = 8
 

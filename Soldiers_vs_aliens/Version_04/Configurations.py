@@ -1,74 +1,87 @@
-
-
 class Configurations:
     """
     Clase que contiene todas las configuraciones del juego.
     """
+    # Configuraciones de la pantalla.
+    _game_title = "Soldados vs aliens"              # Título de la ventana.
+    _screen_size = (1280, 720)                      # Resolución de la pantalla (ancho, alto).
+    _fps = 30                                       # Número máximo de FPS del videojuego.
 
-    _screen_size = (1280, 720)   #Resolución de la pantalla (ancho x alto)
-    _game_title = "Soldier VS Aliens" # Título del juego.
-    _background = (20, 30, 50) #Fondo de la pantalla en formato rgb
+    # Configuraciones del soldado.
+    _soldier_size = (140, 80)                       # Escala del soldado (ancho, alto).
 
+    _frames_per_row = 4                             # Número de frames que contiene cada fila de la hoja de frames.
+    _soldier_frame_delay = 300                      # Tiempo de cada frame del personaje (en ms).
+    _soldier_speed = 12.5                           # Velocidad (en píxeles) del personaje.
+
+    # Rutas de las imágenes utilizadas.
     _background_image_path = "../media/background.png"
-
-    _soldier_image_path = "../media/soldier.png"
-    _soldier_block_size = 80
-    _fps = 8
+    _soldier_sheet_path = "../media/soldier-idle-sheet.png"
 
 
     @classmethod
-    def get_screen_size(cls)->tuple[int, int]:
+    def get_game_title(cls) -> str:
         """
-        Getter para _screen_size
-        :return:
+        Getter para _game_title.
+        """
+        return cls._game_title
+
+    @classmethod
+    def get_screen_size(cls) -> tuple[int, int]:
+        """
+        Getter para _screen_size.
         """
         return cls._screen_size
 
     @classmethod
     def get_fps(cls) -> int:
         """
-        Getter para _fps
-        :return:
+        Getter para _fps.
         """
         return cls._fps
 
     @classmethod
-    def get_soldier_block_size(cls) -> int:
+    def get_soldier_size(cls) -> tuple[int, int]:
         """
-        Getter para _soldier_block_size
-        :return:
+        Getter para _soldier_size.
         """
-        return cls._soldier_block_size
+        return cls._soldier_size
+
 
     @classmethod
-    def get_game_title(cls) -> str:
+    def get_frames_per_row(cls) -> int:
         """
-        Getter para _game_title
-        :return:
+        Getter para _soldier_frames_per_row.
         """
-        return cls._game_title
+        return cls._frames_per_row
+
 
     @classmethod
-    def get_soldier_image_path(cls)->str:
+    def get_soldier_frame_delay(cls) -> int:
         """
-        Getter para _soldier_image_path
-        :return:
+        Getter para _soldier_frame_delay.
         """
-        return cls._soldier_image_path
+        return cls._soldier_frame_delay
+
+
+    @classmethod
+    def get_soldier_speed(cls) -> float:
+        """
+        Getter para _soldier_speed.
+        """
+        return cls._soldier_speed
 
     @classmethod
     def get_background_image_path(cls) -> str:
         """
-        Getter para _background_image_path
-        :return:
+        Getter para _background_image_path.
         """
         return cls._background_image_path
 
-    @classmethod
-    def get_background(cls) -> tuple[int, int,int]:
-        """
-        Getter para background
-        :return:
-        """
-        return cls._background
 
+    @classmethod
+    def get_soldier_sheet_path(cls) -> str:
+        """
+        Getter para _soldier_sheet_path.
+        """
+        return cls._soldier_sheet_path
