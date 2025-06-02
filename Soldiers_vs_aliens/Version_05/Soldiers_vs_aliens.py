@@ -1,7 +1,7 @@
 """
 Nombre: Durán Breceda Lourdes Jamileth
-Fecha: 26 mayo 2025
-Versión 0.4:
+Fecha: 02 junio 2025
+Versión 0.5:
 
 
 """
@@ -12,6 +12,7 @@ from Configurations import Configurations
 from Game_funcionalities import game_events, screen_refresh
 from Media import Background
 from Soldier import Soldier
+from Shot import Shot
 
 
 def run_game() -> None:
@@ -31,6 +32,7 @@ def run_game() -> None:
 
     # Se crea el objeto del soldado (personaje principal).
     soldier = Soldier(screen)
+    shot = Shot(screen)
 
     # Ciclo principal del videojuego.
     game_over = False
@@ -40,7 +42,7 @@ def run_game() -> None:
         game_over = game_events(soldier)
 
         # Función que administra los elementos de la pantalla.
-        screen_refresh(screen, clock, background, soldier)
+        screen_refresh(screen, clock, background, soldier, shot)
 
     # Cierra todos los recursos del módulo pygame.
     pygame.quit()
