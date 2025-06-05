@@ -5,11 +5,13 @@ from Soldier import Soldier
 from Shot import Shot
 
 
-def game_events(soldier: Soldier) -> bool:
+def game_events(soldier: Soldier, shots: pygame.sprite.Group) -> bool:
     """
     Función que administra los eventos del juego.
     :param soldier: Objeto con el soldado (personaje principal).
+    :param shots:
     :return: La bandera de fin del juego.
+
     """
     # Se declara la bandera de fin del juego que se retorna.
     game_over = False
@@ -40,6 +42,12 @@ def game_events(soldier: Soldier) -> bool:
             if event.key == pygame.K_DOWN:
                 soldier.is_moving_down = False
 
+            if event.key == pygame.K_SPACE:
+                new_shot = Shot(soldier)
+                #shots.remove(shots.sprites()[0])
+                shots.add(new_shot)
+                soldier.shots()
+
     # Se regresa la bandera.
     return game_over
 
@@ -47,17 +55,24 @@ def game_events(soldier: Soldier) -> bool:
 def screen_refresh(screen: pygame.surface.Surface,
                    clock: pygame.time.Clock,
                    background: Background,
-                   soldier: Soldier, shot: Shot) -> None:
+                   soldier: Soldier, shots: pygame.sprite.Group) -> None:
     """
     Función que administra los elementos de la pantalla.
     :param screen: Objeto con la pantalla.
     :param clock: Objeto con el reloj del videojuego.
     :param background: Objeto con el fondo de pantalla.
     :param soldier: Objeto con el soldado (personaje principal).
-    :param shot: Bala
+    :param shots: Bala
     """
     # Se dibuja el fondo de la pantalla.
     background.blit(screen)
+
+    for shot in shots.sprites():
+        shot.update_position(screen)
+        shot.update_animation()
+        shot.blit(screen)
+
+    shots.draw(screen)
 
 
     # Se actualiza la posición del soldado, se anima su sprite y se dibuja en la pantalla.
@@ -65,9 +80,8 @@ def screen_refresh(screen: pygame.surface.Surface,
     soldier.update_animation()
     soldier.blit(screen)
 
-    shot.update_position(screen)
-    shot.update_animation()
-    shot.blit(screen)
+
+
 
     # Se actualiza la pantalla, dando la impresión de movimiento.
     pygame.display.flip()

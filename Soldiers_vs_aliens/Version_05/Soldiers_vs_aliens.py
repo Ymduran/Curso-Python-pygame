@@ -5,6 +5,7 @@ Versión 0.5:
 
 
 """
+#from email.headerregistry import Group
 
 # Se importan los módulos necesarios.
 import pygame
@@ -13,6 +14,7 @@ from Game_funcionalities import game_events, screen_refresh
 from Media import Background
 from Soldier import Soldier
 from Shot import Shot
+from pygame.sprite import Group
 
 
 def run_game() -> None:
@@ -32,17 +34,20 @@ def run_game() -> None:
 
     # Se crea el objeto del soldado (personaje principal).
     soldier = Soldier(screen)
-    shot = Shot(screen)
+    #shot = Shot(soldier)
+
+    shots = Group()
+    #shots.add(shot)
 
     # Ciclo principal del videojuego.
     game_over = False
     while not game_over:
 
         # Función que administra los eventos del juego.
-        game_over = game_events(soldier)
+        game_over = game_events(soldier, shots)
 
         # Función que administra los elementos de la pantalla.
-        screen_refresh(screen, clock, background, soldier, shot)
+        screen_refresh(screen, clock, background, soldier, shots)
 
     # Cierra todos los recursos del módulo pygame.
     pygame.quit()

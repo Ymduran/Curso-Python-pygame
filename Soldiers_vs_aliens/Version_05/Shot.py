@@ -1,12 +1,13 @@
 import pygame
 from pygame.sprite import Sprite
 from Configurations import Configurations
+from Soldier import Soldier
 
 class Shot(Sprite):
-    def __init__(self, screen: pygame.surface.Surface):
+    def __init__(self, soldier:Soldier):
         """
         Constructor del soldado, en donde se llama al constructor padre de Sprite.
-        :param screen: Objeto con la pantalla.
+
         """
         # Se llama al constructor de la clase padre.
         super().__init__()
@@ -22,6 +23,7 @@ class Shot(Sprite):
 
         # Se obtienen los datos para "recortar" cada sprite de la hoja de sprites.
         sheet_frames_per_row = Configurations.get_frames_per_row()
+
         sheet_width = shot_sheet.get_width()
         sheet_height = shot_sheet.get_height()
         shot_frame_width = sheet_width // sheet_frames_per_row
@@ -66,6 +68,15 @@ class Shot(Sprite):
         self._rect_y = float(self.rect.y)
         self._speed = Configurations.get_shot_speed()
 
+        # Se inicializa la posición inicial, en este caso, a la derecha de la pantalla.
+        soldier_rect = soldier.rect
+        self.rect.right = soldier_rect.left
+        self.rect.centery = soldier_rect.centery
+
+        # Se incluyen los atributos para el movimiento.
+        self._rect_x = float(self.rect.x)
+        self._speed = Configurations.get_soldier_speed()
+
 
     def update_position(self, screen: pygame.surface.Surface) -> None:
         """
@@ -74,15 +85,10 @@ class Shot(Sprite):
         """
         # Se obtiene el rectángulo del borde de la pantalla
         screen_rect = screen.get_rect()
-        """
-        
-        # Se verifica que el personaje no sobrepase los bordes de la pantalla.
-        if self._rect_y < float(screen_rect.top):
-            self._rect_y = float(screen_rect.y)
+        self._rect_x -= self._speed
+        self.rect.x = int(self._rect_x)
 
-        elif self._rect_y > (screen_rect.bottom - self.image.get_height()):
-            self._rect_y = float(screen_rect.bottom - self.image.get_height())
-"""
+
     def update_animation(self) -> None:
         """
         Se utiliza para actualizar el frame visible del soldado, dando la impresión de animación.
