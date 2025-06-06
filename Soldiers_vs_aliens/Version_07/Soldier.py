@@ -49,6 +49,7 @@ class Soldier(Sprite):
         soldier_frame_width = sheet_width // sheet_frames_per_row # Recortar el ancho entre 4
         soldier_frame_height = sheet_height//sheet_frames_per_column # Recortar el alto entre 2
 
+
         # Se obtiene el tamaño para escalar cada frame.
         soldier_frame_size = Configurations.get_soldier_size()
 
