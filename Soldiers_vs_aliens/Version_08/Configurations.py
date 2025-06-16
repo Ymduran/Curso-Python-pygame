@@ -25,9 +25,14 @@ class Configurations:
     _shot_size = (32,32)
     _shot_speed = 12.5
 
+    _aliens_Sheets = ["../media/alien1-Sheet.png", "../media/alien2-Sheet.png","../media/alien3-Sheet.png", "../media/alien4-Sheet.png", "../media/alien5-Sheet.png"]
 
-
-
+    @classmethod
+    def get_aliens_Sheets(cls) -> list:
+        """
+        Getter para _aliens_Sheets.
+        """
+        return cls._aliens_Sheets
 
     @classmethod
     def get_game_title(cls) -> str:
@@ -63,8 +68,6 @@ class Configurations:
         Getter para _soldier_size.
         """
         return cls._soldier_size
-
-
 
 
     @classmethod
