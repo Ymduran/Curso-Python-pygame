@@ -15,6 +15,7 @@ from Media import Background
 from Soldier import Soldier
 from Shot import Shot
 from pygame.sprite import Group
+from Alien import Alien
 
 
 def run_game() -> None:
@@ -38,15 +39,26 @@ def run_game() -> None:
 
     shots = Group()
     #shots.add(shot)
-
     aliens = Group()
+
+    new_alien = Alien(screen)
+    aliens.add(new_alien)
+
+    new_alien2 = Alien(screen)
+    aliens.add(new_alien2)
+
+    new_alien3 = Alien(screen)
+    aliens.add(new_alien3)
+
+
+
 
     # Ciclo principal del videojuego.
     game_over = False
     while not game_over:
 
         # Función que administra los eventos del juego.
-        game_over = game_events(soldier, shots, aliens, screen)
+        game_over = game_events(soldier, shots)
 
         # Función que administra los elementos de la pantalla.
         screen_refresh(screen, clock, background, soldier, shots, aliens)

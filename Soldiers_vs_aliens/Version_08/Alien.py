@@ -1,7 +1,9 @@
+from random import uniform
+
 import pygame
 from pygame.sprite import Sprite
 from Configurations import Configurations
-import random
+from random import choice, uniform
 
 class Alien(Sprite):
     """
@@ -25,8 +27,9 @@ class Alien(Sprite):
 
 
         # Banderas de movimiento. Inicialmente, el personaje no se mueve.
-        self._is_moving_up = False
-        self._is_moving_down = False
+        movement_bool_value = choice([True,False])
+        self._is_moving_up = movement_bool_value
+        self._is_moving_down = not movement_bool_value
 
 
         # Lista que almacena los frames del soldado.
@@ -34,7 +37,7 @@ class Alien(Sprite):
 
 
         # Se carga la hoja que contiene los frames del soldado.
-        sheet_path = random.choice(Configurations.get_aliens_Sheets())
+        sheet_path = choice(Configurations.get_aliens_Sheets())
         alien_sheet = pygame.image.load(sheet_path)
 
 
@@ -74,30 +77,50 @@ class Alien(Sprite):
         # Se obtiene el rectángulo que representa la posición del sprite.
         self.rect = self.image.get_rect()
 
-
-
-        # Se incluyen los atributos para el movimiento.
-        self._rect_y = float(self.rect.y)
-        self._speed = Configurations.get_shot_speed()
-
-        # Se inicializa la posición inicial, en este caso, a la derecha de la pantalla.
+        # Se inicializa la posición inicial, en este caso, a la izquierda de la pantalla.
         screen_rect = screen.get_rect()
         self.rect.left = screen_rect.left
         self.rect.centery = screen_rect.centery
 
         # Se incluyen los atributos para el movimiento.
+        self._rect_y = float(self.rect.y)
         self._rect_x = float(self.rect.x)
-        self._speed = Configurations.get_soldier_speed()
+        self._speed_x = Configurations.get_alien_speed_x()* uniform(0.8,0.2)
+        self._speed_y = Configurations.get_alien_speed_y()*uniform(2.5, 2.0)
+
 
     def update_position(self, screen: pygame.surface.Surface) -> None:
         """
         Se utiliza para actualizar la posición del soldado de acuerdo a las banderas de movimiento.
         :param screen: Pantalla en donde se verifican los límites.
         """
+
+
         # Se obtiene el rectángulo del borde de la pantalla
         screen_rect = screen.get_rect()
-        self._rect_x += self._speed
+        self._rect_x += self._speed_x
         self.rect.x = int(self._rect_x)
+
+        # Se verifican los estados de la bandera para modificar la posición.
+        if self._is_moving_up:
+            self._rect_y -= self._speed_y
+
+        elif self._is_moving_down:
+            self._rect_y += self._speed_y
+
+        # Se verifica que el personaje no sobrepase los bordes de la pantalla.
+        if self._rect_y < float(screen_rect.top):
+            self._rect_y = float(screen_rect.y)
+            self.is_moving_down = True
+            self.is_moving_up = False
+
+        elif self._rect_y > (screen_rect.bottom - self.image.get_height()):
+            self._rect_y = float(screen_rect.bottom - self.image.get_height())
+            self.is_moving_down = False
+            self.is_moving_up = True
+
+        # Se actualiza la posición del rectángulo de acuerdo a la posición.
+        self.rect.y = int(self._rect_y)
 
 
     def update_animation(self) -> None:
@@ -157,4 +180,4 @@ class Alien(Sprite):
         """
         Setter para self._is_moving_down
         """
-        self._is_moving_down = va
+        self._is_moving_down = value

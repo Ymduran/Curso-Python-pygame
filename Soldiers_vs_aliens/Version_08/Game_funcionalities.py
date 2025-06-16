@@ -6,12 +6,12 @@ from Shot import Shot
 from Alien import Alien
 
 
-def game_events(soldier: Soldier, shots: pygame.sprite.Group, aliens:pygame.sprite.Group, screen: pygame.surface.Surface) -> bool:
+def game_events(soldier: Soldier, shots: pygame.sprite.Group) -> bool:
     """
     Función que administra los eventos del juego.
     :param soldier: Objeto con el soldado (personaje principal).
     :param shots:
-    :param aliens:
+
     :return: La bandera de fin del juego.
 
     """
@@ -44,8 +44,7 @@ def game_events(soldier: Soldier, shots: pygame.sprite.Group, aliens:pygame.spri
                 shots.add(new_shot)
                 soldier.shoots()
 
-                new_alien = Alien(screen)
-                aliens.add(new_alien)
+
 
 
 

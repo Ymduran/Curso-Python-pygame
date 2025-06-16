@@ -14,6 +14,9 @@ class Configurations:
     _soldier_frame_delay = 100                      # Tiempo de cada frame del personaje (en ms).
     _soldier_speed = 12.5                           # Velocidad (en píxeles) del personaje.
 
+    _alien_speed_x = 12.5
+    _alien_speed_y = 9.5
+
 
     _frames_per_column = 2
 
@@ -92,13 +95,32 @@ class Configurations:
         """
         return cls._soldier_frame_delay
 
+    @classmethod
+    def get_alien_speed_x(cls) -> float:
+        """
+        Getter para  _alien_speed_x.
+        """
+        return cls._alien_speed_x
 
+    @classmethod
+    def get_alien_speed_y(cls) -> float:
+        """
+        Getter para  _alien_speed_y.
+        """
+        return cls._alien_speed_y
     @classmethod
     def get_soldier_speed(cls) -> float:
         """
         Getter para _soldier_speed.
         """
         return cls._soldier_speed
+
+    @classmethod
+    def get_soldier_speed_y(cls) -> float:
+        """
+        Getter para _soldier_speed.
+        """
+        return cls._soldier_speed_y
 
     @classmethod
     def get_shot_speed(cls) -> float:
