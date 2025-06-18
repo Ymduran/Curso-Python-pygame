@@ -3,7 +3,7 @@ from random import uniform
 import pygame
 from pygame.sprite import Sprite
 from Configurations import Configurations
-from random import choice, uniform
+from random import choice, uniform, randint
 
 class Alien(Sprite):
     """
@@ -79,14 +79,22 @@ class Alien(Sprite):
 
         # Se inicializa la posición inicial, en este caso, a la izquierda de la pantalla.
         screen_rect = screen.get_rect()
-        self.rect.left = screen_rect.left
+
+        #self.rect.left = screen_rect.left
         self.rect.centery = screen_rect.centery
+        self.rect.y = alien_frame_size[1] * randint(0, (screen.get_height() // alien_frame_size[1] - 1))
+        self.rect.x = -alien_frame_size[0]
 
         # Se incluyen los atributos para el movimiento.
         self._rect_y = float(self.rect.y)
         self._rect_x = float(self.rect.x)
         self._speed_x = Configurations.get_alien_speed_x()* uniform(0.8,0.2)
         self._speed_y = Configurations.get_alien_speed_y()*uniform(2.5, 2.0)
+
+        #self.rect.x = apple_size * randint(0, (screen_width // apple_size - 1))
+
+
+
 
 
     def update_position(self, screen: pygame.surface.Surface) -> None:

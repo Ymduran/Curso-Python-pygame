@@ -1,21 +1,26 @@
 """
 Nombre: Durán Breceda Lourdes Jamileth
 Fecha: 02 junio 2025
-Versión 0.5:
+Versión 0.8:
 
 
 """
+from time import sleep
+
 #from email.headerregistry import Group
 
 # Se importan los módulos necesarios.
 import pygame
 from Configurations import Configurations
-from Game_funcionalities import game_events, screen_refresh
+from Game_funcionalities import game_events, screen_refresh, check_collisions
 from Media import Background
 from Soldier import Soldier
 from Shot import Shot
 from pygame.sprite import Group
 from Alien import Alien
+from random import randint
+
+
 
 
 def run_game() -> None:
@@ -41,14 +46,12 @@ def run_game() -> None:
     #shots.add(shot)
     aliens = Group()
 
-    new_alien = Alien(screen)
-    aliens.add(new_alien)
+    min_aliens = Configurations.get_min_aliens()
+    random_to_spawn = min_aliens + randint(0,5)
 
-    new_alien2 = Alien(screen)
-    aliens.add(new_alien2)
-
-    new_alien3 = Alien(screen)
-    aliens.add(new_alien3)
+    for _ in range(random_to_spawn):
+        alien= Alien(screen)
+        aliens.add(alien)
 
 
 
@@ -59,9 +62,14 @@ def run_game() -> None:
 
         # Función que administra los eventos del juego.
         game_over = game_events(soldier, shots)
+        if game_over: break
+        game_over = check_collisions(screen, soldier, shots, aliens)
 
         # Función que administra los elementos de la pantalla.
         screen_refresh(screen, clock, background, soldier, shots, aliens)
+        if game_over:
+            sleep(3)
+
 
     # Cierra todos los recursos del módulo pygame.
     pygame.quit()

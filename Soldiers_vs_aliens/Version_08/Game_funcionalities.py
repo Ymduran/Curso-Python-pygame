@@ -4,6 +4,8 @@ from Media import Background
 from Soldier import Soldier
 from Shot import Shot
 from Alien import Alien
+from random import randint
+
 
 
 def game_events(soldier: Soldier, shots: pygame.sprite.Group) -> bool:
@@ -39,13 +41,10 @@ def game_events(soldier: Soldier, shots: pygame.sprite.Group) -> bool:
 
             # Si se presionó el espacio, entonces se crea un nuevo disparo y se agrega al grupo. Además, indica que
             # el soldado está disparando.
-            if event.key == pygame.K_SPACE:
+            if event.key == pygame.K_SPACE and len(shots)<2:
                 new_shot = Shot(soldier)
                 shots.add(new_shot)
                 soldier.shoots()
-
-
-
 
 
         # Se verifica el evento de soltar una tecla.
@@ -60,6 +59,56 @@ def game_events(soldier: Soldier, shots: pygame.sprite.Group) -> bool:
 
 
     # Se regresa la bandera.
+    return game_over
+
+def check_collisions(screen: pygame.surface.Surface,
+                    soldier: Soldier,
+                    shots: pygame.sprite.Group,
+                   aliens: pygame.sprite.Group) -> bool:
+    """
+    Función que revisa las colisiones del juego.
+    - Shot vs Alien.
+    - Alien vs Soldier.
+    - Alien vs lado derecho de la pantalla.
+    :param: screen:
+    :param: soldier:
+    :param: shots:
+    :param: aliens:
+    """
+    # Se declara la bandera de fin de juego.
+    game_over = False
+    screen_rect=screen.get_rect()
+    # Se revisan colisiones de los shots
+    aliens_gunshots_collisions = pygame.sprite.groupcollide(shots,aliens,True,True)
+    for alien in aliens.copy():#Hacer una copia de los aliens
+        if alien.rect.left > screen_rect.right:
+            aliens.remove(alien)
+
+    for shot in shots.copy():
+        if shot.rect.right < screen_rect.left:
+            shots.remove(shot)
+
+
+    soldier_aliens_collisions = pygame.sprite.spritecollide(soldier,aliens,False)
+    if len(soldier_aliens_collisions)>0: game_over=True
+
+    if len(aliens) <= Configurations.get_min_aliens():
+        random_to_spawn = randint(0, 5)
+
+        for _ in range(random_to_spawn):
+            alien = Alien(screen)
+            aliens.add(alien)
+
+
+
+
+
+
+
+
+
+
+
     return game_over
 
 
