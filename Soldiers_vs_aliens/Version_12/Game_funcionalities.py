@@ -10,44 +10,35 @@ from Score import Score
 from AudioManager import AudioManager
 from random import randint
 
-
 def game_events(soldier: Soldier,
                 soldier2: Soldier2,
                 shots: Group,
                 audio: AudioManager) -> bool:
     """
-    Maneja los eventos de entrada para ambos jugadores.
-
-    Args:
-        soldier: Instancia del primer jugador
-        soldier2: Instancia del segundo jugador
-        shots: Grupo de disparos activos
-        audio: Gestor de efectos de sonido
-
-    Returns:
-        bool: True si el juego debe terminar
+    Procesa eventos de teclado para ambos jugadores.
+    Retorna True si se debe cerrar el juego.
     """
     game_over = False
-    controls = Configurations.get_second_player_controls()  # Controles del jugador 2
+    controls = Configurations.get_second_player_controls()
 
     for event in pygame.event.get():
-        # Evento de salida
+        # ─── Cierre del juego ───
         if event.type == pygame.QUIT:
             game_over = True
 
-        # Eventos de tecla presionada
+        # ─── Teclas presionadas ───
         if event.type == pygame.KEYDOWN:
-            # Jugador 1 - Controles originales
+            # Jugador 1
             if event.key == pygame.K_UP:
                 soldier.is_moving_up = True
             if event.key == pygame.K_DOWN:
                 soldier.is_moving_down = True
-            if event.key == pygame.K_SPACE and len(shots) < 4:  # Límite aumentado
+            if event.key == pygame.K_SPACE and len(shots) <2:
                 shots.add(Shot(soldier))
                 audio.play_sound('shot')
                 soldier.shoots()
 
-            # Jugador 2 - Nuevos controles
+            # Jugador 2
             if event.key == controls["move_up"]:
                 soldier2.is_moving_up = True
             if event.key == controls["move_down"]:
@@ -57,7 +48,7 @@ def game_events(soldier: Soldier,
                 audio.play_sound('shot')
                 soldier2.shoots()
 
-        # Eventos de tecla liberada
+        # ─── Teclas soltadas ───
         if event.type == pygame.KEYUP:
             # Jugador 1
             if event.key == pygame.K_UP:
@@ -73,7 +64,6 @@ def game_events(soldier: Soldier,
 
     return game_over
 
-
 def check_collisions(screen: pygame.Surface,
                      soldier: Soldier,
                      soldier2: Soldier2,
@@ -82,53 +72,50 @@ def check_collisions(screen: pygame.Surface,
                      score: Score,
                      audio: AudioManager) -> bool:
     """
-    Detecta colisiones entre elementos del juego.
-
-    Args:
-        screen: Superficie de la pantalla
-        soldier: Primer jugador
-        soldier2: Segundo jugador
-        shots: Grupo de disparos
-        aliens: Grupo de aliens
-        score: Marcador de puntos
-        audio: Gestor de sonidos
-
-    Returns:
-        bool: True si el juego debe terminar
+    Detecta colisiones entre:
+    - disparos y aliens
+    - jugadores y aliens
+    También genera nuevos enemigos y determina si el juego termina.
     """
     game_over = False
     screen_rect = screen.get_rect()
 
-    # Colisiones disparo-alien (elimina ambos)
+    # ─── Colisiones disparo vs alien ───
     collisions = pygame.sprite.groupcollide(shots, aliens, True, True)
-
     if collisions:
         audio.play_sound('alien_hit')
-        for aliens_hit in collisions.values():
-            score.increase()  # +1 punto por cada alien impactado
+        for _ in collisions.values():
+            score.increase()
 
-    # Limpieza de elementos fuera de pantalla
+    # ─── Eliminar aliens fuera de pantalla ───
     for alien in aliens.copy():
         if alien.rect.left > screen_rect.right:
             aliens.remove(alien)
 
+    # ─── Eliminar disparos fuera de pantalla ───
     for shot in shots.copy():
         if shot.rect.right < screen_rect.left or shot.rect.left > screen_rect.right:
             shots.remove(shot)
 
-    # Colisiones jugadores-alien (game over)
-    if (pygame.sprite.spritecollide(soldier, aliens, False) or
-            pygame.sprite.spritecollide(soldier2, aliens, False)):
+    # ─── Colisiones jugador vs alien ───
+    if soldier.is_live and pygame.sprite.spritecollide(soldier, aliens, False):
+        soldier.is_live = False
         audio.play_sound('game_over')
+
+    if soldier2.is_live and pygame.sprite.spritecollide(soldier2, aliens, False):
+        soldier2.is_live = False
+        audio.play_sound('game_over')
+
+    # ─── Game Over si ambos jugadores están muertos ───
+    if not soldier.is_live and not soldier2.is_live:
         game_over = True
 
-    # Generación de nuevos aliens si quedan pocos
+    # ─── Reposición de aliens ───
     if len(aliens) <= Configurations.get_min_aliens():
         for _ in range(randint(0, 5)):
             aliens.add(Alien(screen))
 
     return game_over
-
 
 def screen_refresh(screen: pygame.Surface,
                    clock: pygame.time.Clock,
@@ -139,48 +126,39 @@ def screen_refresh(screen: pygame.Surface,
                    aliens: Group,
                    score: Score) -> None:
     """
-    Actualiza todos los elementos gráficos en pantalla.
-
-    Args:
-        screen: Superficie donde se dibuja
-        clock: Controlador de FPS
-        background: Fondo del juego
-        soldier: Primer jugador
-        soldier2: Segundo jugador
-        shots: Disparos activos
-        aliens: Aliens activos
-        score: Marcador de puntos
+    Redibuja todos los elementos del juego por frame:
+    fondo, disparos, enemigos, jugadores y puntaje.
     """
-    # Dibujar fondo
+    # ─── Dibujar fondo ───
     background.blit(screen)
 
-    # Actualizar y dibujar disparos
+    # ─── Disparos ───
     for shot in shots:
         shot.update_position(screen)
         shot.update_animation()
         shot.blit(screen)
 
-    # Actualizar y dibujar aliens
+    # ─── Aliens ───
     for alien in aliens:
         alien.update_position(screen)
         alien.update_animation()
         alien.blit(screen)
 
-    # Actualizar y dibujar jugadores
-    soldier.update_position(screen)
-    soldier.update_animation()
-    soldier.blit(screen)
+    # ─── Jugador 1 ───
+    if soldier.is_live:
+        soldier.update_position(screen)
+        soldier.update_animation()
+        soldier.blit(screen)
 
-    soldier2.update_position(screen)
-    soldier2.update_animation()
-    soldier2.blit(screen)
+    # ─── Jugador 2 ───
+    if soldier2.is_live:
+        soldier2.update_position(screen)
+        soldier2.update_animation()
+        soldier2.blit(screen)
 
-    # Dibujar marcador
+    # ─── Puntaje ───
     score.draw(screen)
 
-    # Actualizar pantalla completa
+    # ─── Actualizar pantalla ───
     pygame.display.flip()
     clock.tick(Configurations.get_fps())
-
-
-

@@ -2,48 +2,43 @@ import pygame
 from pygame.sprite import Sprite
 from Configurations import Configurations
 
-
 class Soldier2(Sprite):
     """
     Segundo personaje jugable con controles alternativos.
-    Hereda funcionalidad básica de Sprite para colisiones.
-    Atributos:
-        _is_moving_up (bool): Bandera movimiento arriba
-        _is_moving_down (bool): Bandera movimiento abajo
-        _is_shooting (bool): Bandera estado disparando
-        _frames (list): Lista de frames de animación
-        image (Surface): Imagen actual del sprite
-        rect (Rect): Posición y dimensiones
-        _rect_y (float): Posición vertical precisa
-        _speed (float): Velocidad de movimiento
-        _last_update_time (int): Tiempo último frame
-        _frame_index (int): Índice frame actual
     """
 
+    # ─────────────────────────────────────────────
+    # 1. Constructor
+    # ─────────────────────────────────────────────
     def __init__(self, screen: pygame.Surface):
-        """Inicializa el segundo soldado en la derecha de la pantalla"""
+        """
+        Inicializa el segundo soldado con sus atributos, animaciones y posición.
+        """
         super().__init__()
 
         # Banderas de estado
         self._is_moving_up = False
         self._is_moving_down = False
         self._is_shooting = False
+        self._is_live = True
 
-        # Carga de hoja de sprites
+        # Lista de frames
         self._frames = []
+
+        # Cargar hoja de sprites
         sheet_path = Configurations.get_soldier_sheet_path()
         soldier_sheet = pygame.image.load(sheet_path)
 
-        # Configuración de frames
+        # Configuración de recorte de frames
         sheet_frames_per_row = Configurations.get_frames_per_row()
         sheet_frames_per_column = Configurations.get_frames_per_column()
         sheet_width = soldier_sheet.get_width()
         sheet_height = soldier_sheet.get_height()
         frame_width = sheet_width // sheet_frames_per_row
         frame_height = sheet_height // sheet_frames_per_column
-
-        # Recorte y escalado de frames
         soldier2_size = Configurations.get_soldier2_size()
+
+        # Recortar y escalar cada frame
         for i in range(sheet_frames_per_column):
             for j in range(sheet_frames_per_row):
                 x = j * frame_width
@@ -53,21 +48,29 @@ class Soldier2(Sprite):
                 frame = pygame.transform.scale(frame, soldier2_size)
                 self._frames.append(frame)
 
-        # Configuración inicial
+        # Imagen inicial y rectángulo
         self.image = self._frames[0]
         self.rect = self.image.get_rect()
         screen_rect = screen.get_rect()
-        self.rect.right = screen_rect.right  # Posición derecha
+        self.rect.right = screen_rect.right
         self.rect.centery = screen_rect.centery
 
-        # Atributos de movimiento
+        # Movimiento
         self._rect_y = float(self.rect.y)
         self._speed = Configurations.get_soldier_speed()
         self._last_update_time = pygame.time.get_ticks()
         self._frame_index = 0
 
+    # ─────────────────────────────────────────────
+    # 2. Movimiento vertical
+    # ─────────────────────────────────────────────
     def update_position(self, screen: pygame.Surface) -> None:
-        """Actualiza posición vertical según las banderas de movimiento"""
+        """
+        Actualiza la posición vertical según banderas de movimiento.
+        """
+        if not self.is_live:
+            return
+
         screen_rect = screen.get_rect()
 
         if self._is_moving_up:
@@ -83,8 +86,16 @@ class Soldier2(Sprite):
 
         self.rect.y = int(self._rect_y)
 
+    # ─────────────────────────────────────────────
+    # 3. Animación del personaje
+    # ─────────────────────────────────────────────
     def update_animation(self) -> None:
-        """Actualiza el frame de animación según el estado"""
+        """
+        Actualiza el frame de animación del personaje según el estado.
+        """
+        if not self.is_live:
+            return
+
         current_time = pygame.time.get_ticks()
         frame_delay = Configurations.get_soldier_frame_delay()
 
@@ -93,8 +104,9 @@ class Soldier2(Sprite):
             self._last_update_time = current_time
             self._frame_index += 1
 
-            # Lógica de animación para disparo/reposo
             frames_per_row = Configurations.get_frames_per_row()
+
+            # Animación en estado normal o de disparo
             if not self._is_shooting and self._frame_index >= frames_per_row:
                 self._frame_index = 0
             elif self._is_shooting and self._frame_index >= 2 * frames_per_row:
@@ -102,17 +114,29 @@ class Soldier2(Sprite):
             elif self._is_shooting and self._frame_index == frames_per_row + 1:
                 self._is_shooting = False
 
+    # ─────────────────────────────────────────────
+    # 4. Acción de disparo
+    # ─────────────────────────────────────────────
     def shoots(self) -> None:
-        """Activa el estado de disparo y ajusta la animación"""
+        """
+        Activa el estado de disparo y ajusta la animación.
+        """
         self._is_shooting = True
         self._frame_index = Configurations.get_frames_per_row()
         self._last_update_time = pygame.time.get_ticks()
 
+    # ─────────────────────────────────────────────
+    # 5. Dibujar en pantalla
+    # ─────────────────────────────────────────────
     def blit(self, screen: pygame.Surface) -> None:
-        """Dibuja el sprite en la pantalla"""
+        """
+        Dibuja el personaje en la pantalla.
+        """
         screen.blit(self.image, self.rect)
 
-    # Propiedades (getters/setters)
+    # ─────────────────────────────────────────────
+    # 6. Getters y Setters
+    # ─────────────────────────────────────────────
     @property
     def is_moving_up(self) -> bool:
         return self._is_moving_up
@@ -136,3 +160,11 @@ class Soldier2(Sprite):
     @is_shooting.setter
     def is_shooting(self, value: bool) -> None:
         self._is_shooting = value
+
+    @property
+    def is_live(self) -> bool:
+        return self._is_live
+
+    @is_live.setter
+    def is_live(self, value: bool) -> None:
+        self._is_live = value
