@@ -1,7 +1,7 @@
 """
 Nombre: Durán Breceda Lourdes Jamileth y Bautista Juárez Juan
 Fecha: 23 junio 2025
-Versión 12 terminada:
+Versión 12:
 """
 
 # ──────────────── IMPORTACIONES ────────────────
